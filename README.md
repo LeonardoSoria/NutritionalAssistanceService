@@ -2,7 +2,7 @@
 
 CREATE DATABASE nutritionaldb;
 
-**GENERATION OF JACOCO REPORT**
+**GENERATION OF JACOCO REPORTS**
 
 ./gradlew jacocoRootReport
 
