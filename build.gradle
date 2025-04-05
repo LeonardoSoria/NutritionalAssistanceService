@@ -1,0 +1,65 @@
+plugins {
+	id 'java' // Common plugin if applicable
+	id 'jacoco'
+	id 'checkstyle'
+}
+
+checkstyle {
+	toolVersion = '10.12.5'
+	configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+	ignoreFailures = false
+}
+
+allprojects {
+	repositories {
+		mavenCentral()
+	}
+}
+
+subprojects {
+	apply plugin: 'java'
+
+	group = 'com.core'
+	version = '1.0.0'
+
+	sourceCompatibility = '17'
+	targetCompatibility = '17'
+
+	if (it.name != 'testingModule' && it.name != 'webapi') {
+		apply plugin: 'jacoco'
+
+		jacoco {
+			toolVersion = "0.8.9" // Use latest version
+		}
+	}
+}
+
+// root build.gradle
+tasks.register('jacocoRootReport', JacocoReport) {
+	// Ensure tests in testingModule run first (if still needed)
+	dependsOn ':testingModule:test'
+
+	// Collect execution data only from testingModule (or other desired modules)
+	executionData fileTree(project(':testingModule').buildDir).include("jacoco/test.exec")
+
+	// Exclude both `testingModule` and `webApi` from the report
+	def modules = subprojects.findAll {
+		it.name != 'testingModule' && it.name != 'webapi'
+	}
+
+	// Configure sources/classes (from remaining modules)
+	sourceDirectories.setFrom(files(modules.collect { it.sourceSets.main.allSource.srcDirs }))
+	classDirectories.setFrom(files(modules.collect { it.sourceSets.main.output }))
+
+	reports {
+		html.required = true
+		html.outputLocation = layout.buildDirectory.dir("reports/jacoco/html")
+		xml.required = true
+		xml.outputLocation = layout.buildDirectory.file("reports/jacoco/jacoco.xml")
+	}
+}
+
+tasks.register('cleanAll', Delete) {
+	delete project.layout.buildDirectory.get().asFile
+}
+

@@ -1,0 +1,25 @@
+{
+	"name": "nur-ms2024-m2-act-3-leonardosoria",
+	"version": "1.0.0",
+	"description": "**SQL COMMANDS NEEDED BEFORE RUNNING THE PROJECT**",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"prepare": "husky install",
+		"lint-java": "gradlew.bat checkstyleMain"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nur-university/nur-ms2024-m2-act-3-LeonardoSoria.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/nur-university/nur-ms2024-m2-act-3-LeonardoSoria/issues"
+	},
+	"homepage": "https://github.com/nur-university/nur-ms2024-m2-act-3-LeonardoSoria#readme",
+	"devDependencies": {
+		"husky": "^9.1.7"
+	}
+}

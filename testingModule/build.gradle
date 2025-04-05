@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.3'
+    id 'jacoco' // Add Jacoco plugin
+}
+
+group = 'com.core.webapi'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':infrastructure')
+    implementation project(':application')
+    implementation project(':domain')
+
+    implementation 'net.sizovs:pipelinr:0.9'
+
+    // Testing dependencies
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.2.0'
+    testImplementation 'org.mockito:mockito-core:5.5.0'
+    testImplementation 'org.assertj:assertj-core:3.24.2'
+    testImplementation 'org.hamcrest:hamcrest:2.2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+}
+
+tasks.test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport // Ensure Jacoco runs after tests
+}
+
+// Configure Jacoco to generate reports
+tasks.jacocoTestReport {
+    dependsOn test // Ensure tests run first
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+
+tasks.named('bootJar') {
+    enabled = false
+}
+
+tasks.named('jar') {
+    enabled = true
+}
