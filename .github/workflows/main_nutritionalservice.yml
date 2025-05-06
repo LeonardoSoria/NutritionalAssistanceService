@@ -33,15 +33,15 @@ jobs:
         with:
           gradle-version: '8.11.1'
 
-      - name: Ensure build directory exists
-        run: mkdir -p build/libs
+      - name: List Gradle tasks
+        run: ./gradlew tasks --all
 
       # Build the project
       - name: Build the Project
         run: ./gradlew bootJar -x test --no-daemon
 
       - name: Debug - List contents of build/libs
-        run: ls -lR build/
+        run: ls -l webApi/build/libs
 
       # Run unit tests in the testing module and generate Jacoco report
       - name: Run Tests and Generate Jacoco Report
@@ -54,7 +54,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: 'build/libs/*.jar'
+          path: webApi/build/libs/*.jar
 
   deploy:
     runs-on: ubuntu-latest
