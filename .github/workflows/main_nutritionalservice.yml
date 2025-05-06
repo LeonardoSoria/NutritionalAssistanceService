@@ -33,7 +33,7 @@ jobs:
 
       # Build the project
       - name: Build the Project
-        run: ./gradlew build
+        run: ./gradlew bootJar -x test --no-daemon
 
       # Run unit tests in the testing module and generate Jacoco report
       - name: Run Tests and Generate Jacoco Report
