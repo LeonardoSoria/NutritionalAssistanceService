@@ -33,7 +33,7 @@ jobs:
 
       # Build the project
       - name: Build the Project
-        run: ./gradlew :webApi:bootJar -x test --no-daemon
+        run: ./gradlew bootJar -x test --no-daemon
 
       # Run unit tests in the testing module and generate Jacoco report
       - name: Run Tests and Generate Jacoco Report
@@ -42,14 +42,14 @@ jobs:
           ./gradlew jacocoRootReport
 
       - name: Debug - List contents of build/libs
-        run: ls webApi/build/libs
+        run: ls -l build/libs
 
     # Upload the artifact for deployment job
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: 'webApi/build/libs/webapi-*.jar'
+          path: 'build/libs/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
