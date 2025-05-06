@@ -41,12 +41,15 @@ jobs:
           ./gradlew :testingModule:test
           ./gradlew jacocoRootReport
 
-      # Upload the artifact for deployment job
+      - name: Debug - List contents of build/libs
+        run: ls webApi/build/libs
+
+    # Upload the artifact for deployment job
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: 'webApi/build/libs/*.jar'
+          path: 'webApi/build/libs/webapi-*.jar'
 
   deploy:
     runs-on: ubuntu-latest
