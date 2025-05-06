@@ -42,7 +42,7 @@ jobs:
           ./gradlew jacocoRootReport
 
       - name: Debug - List contents of build/libs
-        run: ls -l build/libs
+        run: ls -R build/
 
     # Upload the artifact for deployment job
       - name: Upload artifact for deployment job
