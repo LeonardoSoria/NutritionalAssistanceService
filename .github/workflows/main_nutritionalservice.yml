@@ -1,37 +1,52 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy JAR app to Azure Web App - nutritionalservice
+name: Build, Test, and Deploy to Azure Web App - nutritionalservice
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read
+
+    env:
+      DB_URL: ${{ secrets.DB_URL }}
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Java version
+      # Set up Java and Gradle
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: 'microsoft'
+          distribution: 'temurin'
 
-      - name: Build with Maven
-        run: mvn clean install
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
 
+      # Build the project
+      - name: Build the Project
+        run: ./gradlew build
+
+      # Run unit tests in the testing module and generate Jacoco report
+      - name: Run Tests and Generate Jacoco Report
+        run: |
+          ./gradlew :testingModule:test
+          ./gradlew jacocoRootReport
+
+      # Upload the artifact for deployment job
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: './build/libs/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -40,21 +55,21 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
-  
+      id-token: write
+      contents: read
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: java-app
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_FD394C40460B451B9300DDB2B6DD8209 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_48A31D85D455405B8716C3C5E2E3B7B7 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_025B760EC9EC48D28960EB14E3852072 }}
+          client-id: ${{ secrets.__clientidsecretname__ }}
+          tenant-id: ${{ secrets.__tenantidsecretname__ }}
+          subscription-id: ${{ secrets.__subscriptionidsecretname__ }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -63,4 +78,3 @@ jobs:
           app-name: 'nutritionalservice'
           slot-name: 'Production'
           package: '*.jar'
-          
