@@ -37,3 +37,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# Ignore local Azure deployment configs
+webApi/.azure/
