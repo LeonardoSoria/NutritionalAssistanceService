@@ -35,14 +35,14 @@ jobs:
       - name: Build the Project
         run: ./gradlew bootJar -x test --no-daemon
 
+      - name: Debug - List contents of build/libs
+        run: ls -lR build/libs
+
       # Run unit tests in the testing module and generate Jacoco report
       - name: Run Tests and Generate Jacoco Report
         run: |
           ./gradlew :testingModule:test
           ./gradlew jacocoRootReport
-
-      - name: Debug - List contents of build/libs
-        run: ls -R build/
 
     # Upload the artifact for deployment job
       - name: Upload artifact for deployment job
