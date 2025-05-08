@@ -28,7 +28,7 @@ public class AppointmentController {
         this.pipeline = pipeline;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/createAppointmentTesting")
     public ResponseEntity<AppointmentResponse> createAppointment(
             @RequestBody @Valid CreateAppointmentRequest createAppointmentRequest) {
         CreateAppointmentCommand createAppointmentCommand = new CreateAppointmentCommand(
