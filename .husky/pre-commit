@@ -1,2 +1,3 @@
 #!/bin/sh
 npm run lint-java
+npm run test-java
