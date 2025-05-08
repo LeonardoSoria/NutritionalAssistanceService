@@ -1,4 +1,4 @@
-name: Build, Test, and Deploy to Azure Web App - nutritionalservice
+name: Build and Test - nutritionalservice
 
 on:
   pull_request:
