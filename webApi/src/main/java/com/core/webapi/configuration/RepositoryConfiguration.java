@@ -2,8 +2,10 @@ package com.core.webapi.configuration;
 
 import com.core.domain.models.appointment.IAppointmentRepository;
 import com.core.domain.models.nutritionalPlan.INutritionalPlanRepository;
+import com.core.domain.models.outbox.IOutboxRepository;
 import com.core.infrastructure.repository.appointment.AppointmentRepositoryImpl;
 import com.core.infrastructure.repository.nutritionalPlan.NutritionalPlanRepositoryImpl;
+import com.core.infrastructure.repository.outbox.OutboxRepositoryImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,4 +21,9 @@ public class RepositoryConfiguration {
     public INutritionalPlanRepository iNutritionalPlanRepository() {
         return new NutritionalPlanRepositoryImpl();
     }
+
+	@Bean(name = "iOutboxRepository")
+	public IOutboxRepository iOutboxRepository() {
+		return new OutboxRepositoryImpl();
+	}
 }
