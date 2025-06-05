@@ -2,6 +2,8 @@ package com.core.application.nutritionalPlan.createNutritionalPlan;
 
 import an.awesome.pipelinr.Command;
 import com.core.application.appointment.createAppointment.CreateAppointmentCommand;
+import com.core.application.outbox.OutboxService;
+import com.core.domain.abstracts.DomainEvent;
 import com.core.domain.abstracts.IUnitOfWork;
 import com.core.domain.models.appointment.Appointment;
 import com.core.domain.models.appointment.IAppointmentFactory;
@@ -20,10 +22,12 @@ public class CreateNutritionalPlanHandler implements Command.Handler<CreateNutri
 
     private final INutritionalPlanFactory nutritionalPlanFactory;
     private final INutritionalPlanRepository nutritionalPlanRepository;
+	private final OutboxService outboxService;
 
-    public CreateNutritionalPlanHandler(INutritionalPlanRepository nutritionalPlanRepository) {
+    public CreateNutritionalPlanHandler(INutritionalPlanRepository nutritionalPlanRepository, OutboxService outboxService) {
         this.nutritionalPlanFactory = new NutritionalPlanFactory();
         this.nutritionalPlanRepository = nutritionalPlanRepository;
+		this.outboxService = outboxService;
     }
 
     @Override
@@ -32,6 +36,12 @@ public class CreateNutritionalPlanHandler implements Command.Handler<CreateNutri
                 command.nutritionistId, command.planDetails);
 
         nutritionalPlanRepository.update(nutritionalPlan);
+
+		for (DomainEvent event : nutritionalPlan.getDomainEvents()) {
+			outboxService.recordEvent(event.getClass().getSimpleName(), event);
+		}
+
+		nutritionalPlan.clearDomainEvents();
 
         return nutritionalPlan;
     }

@@ -30,7 +30,7 @@ public class OutboxPublisherService {
 			.buildClient();
 	}
 
-	@Scheduled(fixedDelay = 10000) // every 10 seconds
+	@Scheduled(fixedDelay = 10000)
 	public void processOutboxMessages() {
 		List<OutboxMessage> messages = outboxRepository.findByProcessed(false);
 

@@ -2,6 +2,7 @@ package com.core.testingmodule.application.nutritionalPlan;
 
 import com.core.application.nutritionalPlan.createNutritionalPlan.CreateNutritionalPlanCommand;
 import com.core.application.nutritionalPlan.createNutritionalPlan.CreateNutritionalPlanHandler;
+import com.core.application.outbox.OutboxService;
 import com.core.domain.models.nutritionalPlan.INutritionalPlanRepository;
 import com.core.domain.models.nutritionalPlan.NutritionalPlan;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,12 +21,15 @@ class CreateNutritionalPlanHandlerTest {
     @Mock
     private INutritionalPlanRepository nutritionalPlanRepository;
 
+	@Mock
+	private OutboxService outboxService;
+
     private CreateNutritionalPlanHandler handler;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        handler = new CreateNutritionalPlanHandler(nutritionalPlanRepository);
+        handler = new CreateNutritionalPlanHandler(nutritionalPlanRepository, outboxService);
     }
 
     @Test

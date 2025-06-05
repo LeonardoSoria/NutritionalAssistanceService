@@ -11,22 +11,22 @@ import java.util.UUID;
 
 public class AppointmentScheduled extends DomainEvent {
 
-    private final UUID appointmentId;
+    private final UUID id;
     private final UUID clientId;
 	private final LocalDate date;
 	private final String status;
 	private final List<AnalysisRequest> analysisRequests;
 
     public AppointmentScheduled(UUID appointmentId, UUID clientId, DateValue date, String status) {
-        this.appointmentId = appointmentId;
+        this.id = appointmentId;
 		this.clientId = clientId;
 		this.date = date.toLocalDate();
 		this.status = status;
 		this.analysisRequests = new ArrayList<>();
     }
 
-    public UUID getAppointmentId() {
-        return appointmentId;
+    public UUID getId() {
+        return id;
     }
 
 	public UUID getClientId() {
