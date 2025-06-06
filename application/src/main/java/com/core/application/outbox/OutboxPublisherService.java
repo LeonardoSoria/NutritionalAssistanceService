@@ -29,11 +29,16 @@ public class OutboxPublisherService {
 		.registerModule(new JavaTimeModule())
 		.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-	public OutboxPublisherService(IOutboxRepository outboxRepository,
-								  @Value("${azure.eventhub.connection-string}") String connectionString,
-								  @Value("${azure.eventhub.hub-name}") String hubName) {
-
+	public OutboxPublisherService(IOutboxRepository outboxRepository) {
 		this.outboxRepository = outboxRepository;
+
+		String connectionString = System.getenv("AZURE_EVENT_HUB_CONNECTION_STRING");
+		String hubName = System.getenv("AZURE_EVENT_HUB_NAME");
+
+		if (connectionString == null || hubName == null) {
+			throw new IllegalStateException("Missing Azure Event Hub environment variables.");
+		}
+
 		this.producerClient = new EventHubClientBuilder()
 			.connectionString(connectionString, hubName)
 			.buildProducerClient();
