@@ -15,4 +15,9 @@ public class AppointmentCompleted extends DomainEvent {
     public UUID getAppointmentId() {
         return appointmentId;
     }
+
+	@Override
+	public String getEventType() {
+		return "APPOINTMENT_COMPLETED";
+	}
 }

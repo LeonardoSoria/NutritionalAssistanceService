@@ -44,4 +44,9 @@ public class AppointmentScheduled extends DomainEvent {
 	public List<AnalysisRequest> getAnalysisRequests() {
 		return analysisRequests;
 	}
+
+	@Override
+	public String getEventType() {
+		return "APPOINTMENT_CREATED";
+	}
 }

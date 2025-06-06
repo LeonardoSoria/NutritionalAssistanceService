@@ -30,7 +30,7 @@ public class CreateUserHandler implements Command.Handler<CreateUserCommand, Use
 		userRepository.upsert(user);
 
 		for (DomainEvent event : user.getDomainEvents()) {
-			outboxService.recordEvent(event.getClass().getSimpleName(), event);
+			outboxService.recordEvent(event.getEventType(), event);
 		}
 
 		user.clearDomainEvents();

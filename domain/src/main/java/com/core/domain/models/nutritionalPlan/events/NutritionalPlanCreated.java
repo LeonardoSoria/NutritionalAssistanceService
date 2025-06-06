@@ -49,4 +49,9 @@ public class NutritionalPlanCreated extends DomainEvent {
 	public String getPlanDetails() {
 		return planDetails;
 	}
+
+	@Override
+	public String getEventType() {
+		return "NUTRITIONAL_PLAN_CREATED";
+	}
 }

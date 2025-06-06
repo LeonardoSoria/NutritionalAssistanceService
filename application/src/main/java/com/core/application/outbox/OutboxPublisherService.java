@@ -1,33 +1,42 @@
 package com.core.application.outbox;
 
-import com.azure.messaging.servicebus.ServiceBusClientBuilder;
-import com.azure.messaging.servicebus.ServiceBusMessage;
-import com.azure.messaging.servicebus.ServiceBusSenderClient;
+import com.azure.messaging.eventhubs.EventData;
+import com.azure.messaging.eventhubs.EventHubClientBuilder;
+import com.azure.messaging.eventhubs.EventHubProducerClient;
+import com.azure.messaging.eventhubs.models.CreateBatchOptions;
+import com.azure.messaging.eventhubs.EventDataBatch;
+import com.core.application.outbox.dto.OutboxPayload;
 import com.core.domain.models.outbox.IOutboxRepository;
 import com.core.domain.models.outbox.OutboxMessage;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import jakarta.annotation.PreDestroy;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OutboxPublisherService {
 
 	private final IOutboxRepository outboxRepository;
-	private final ServiceBusSenderClient senderClient;
+	private final EventHubProducerClient producerClient;
+	private final ObjectMapper objectMapper = new ObjectMapper()
+		.registerModule(new JavaTimeModule())
+		.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
 	public OutboxPublisherService(IOutboxRepository outboxRepository,
-								  @Value("${azure.servicebus.connection-string}") String connectionString,
-								  @Value("${azure.servicebus.topic-name}") String topicName) {
+								  @Value("${azure.eventhub.connection-string}") String connectionString,
+								  @Value("${azure.eventhub.hub-name}") String hubName) {
 
 		this.outboxRepository = outboxRepository;
-		this.senderClient = new ServiceBusClientBuilder()
-			.connectionString(connectionString)
-			.sender()
-			.topicName(topicName)
-			.buildClient();
+		this.producerClient = new EventHubClientBuilder()
+			.connectionString(connectionString, hubName)
+			.buildProducerClient();
 	}
 
 	@Scheduled(fixedDelay = 10000)
@@ -36,19 +45,39 @@ public class OutboxPublisherService {
 
 		for (OutboxMessage message : messages) {
 			try {
-				senderClient.sendMessage(new ServiceBusMessage(message.getBody()));
+				Map<String, Object> bodyMap = objectMapper.readValue(
+					message.getBody(), new TypeReference<Map<String, Object>>() {}
+				);
+
+				OutboxPayload payload = new OutboxPayload(
+					message.getEventType(),
+					message.getEventVersion(),
+					message.getTimestamp(),
+					bodyMap,
+					message.getSource()
+				);
+
+				String payloadJson = objectMapper.writeValueAsString(payload);
+				EventData eventData = new EventData(payloadJson);
+
+				// Send as single-event batch
+				EventDataBatch batch = producerClient.createBatch(new CreateBatchOptions());
+				if (!batch.tryAdd(eventData)) {
+					throw new IllegalArgumentException("Event too large for batch");
+				}
+				producerClient.send(batch);
 
 				message.process();
 				outboxRepository.save(message);
-				System.out.println("Message sent successfully! - " + message.getBody());
+				System.out.println("Event sent successfully! - " + payloadJson);
 			} catch (Exception ex) {
-				System.out.println("Failed to send message: " + message.getId() + ": " + ex.getMessage());
+				System.out.println("Failed to send event: " + message.getId() + ": " + ex.getMessage());
 			}
 		}
 	}
 
 	@PreDestroy
 	public void cleanup() {
-		senderClient.close();
+		producerClient.close();
 	}
 }

@@ -19,4 +19,6 @@ public abstract class DomainEvent {
     public LocalDateTime getOccurredOn() {
         return occurredOn;
     }
+
+	public abstract String getEventType();
 }

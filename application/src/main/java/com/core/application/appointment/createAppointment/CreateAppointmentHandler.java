@@ -33,7 +33,7 @@ public class CreateAppointmentHandler implements Command.Handler<CreateAppointme
 		appointmentRepository.update(appointment);
 
 		for (DomainEvent event : appointment.getDomainEvents()) {
-			outboxService.recordEvent(event.getClass().getSimpleName(), event);
+			outboxService.recordEvent(event.getEventType(), event);
 		}
 
 		appointment.clearDomainEvents();

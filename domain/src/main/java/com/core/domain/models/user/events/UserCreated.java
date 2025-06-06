@@ -43,4 +43,9 @@ public class UserCreated extends DomainEvent {
 	public LocalDate getCreatedAt() {
 		return createdAt;
 	}
+
+	@Override
+	public String getEventType() {
+		return "USER_CREATED";
+	}
 }

@@ -38,7 +38,7 @@ public class CreateNutritionalPlanHandler implements Command.Handler<CreateNutri
         nutritionalPlanRepository.update(nutritionalPlan);
 
 		for (DomainEvent event : nutritionalPlan.getDomainEvents()) {
-			outboxService.recordEvent(event.getClass().getSimpleName(), event);
+			outboxService.recordEvent(event.getEventType(), event);
 		}
 
 		nutritionalPlan.clearDomainEvents();
