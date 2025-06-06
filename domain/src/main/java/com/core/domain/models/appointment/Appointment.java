@@ -1,7 +1,9 @@
 package com.core.domain.models.appointment;
 
 import com.core.domain.abstracts.AggregateRoot;
+import com.core.domain.abstracts.DomainEvent;
 import com.core.domain.models.appointment.events.AppointmentCompleted;
+import com.core.domain.models.appointment.events.AppointmentScheduled;
 import com.core.domain.shared.DateValue;
 
 import java.util.ArrayList;
@@ -22,7 +24,6 @@ public class Appointment extends AggregateRoot {
         this.id = UUID.randomUUID();
         this.clientId = clientId;
         this.date = date;
-        this.status = "Scheduled";
         this.analysisRequests = new ArrayList<>();
     }
 
@@ -53,6 +54,20 @@ public class Appointment extends AggregateRoot {
     public List<AnalysisRequest> getAnalysisRequests() {
         return Collections.unmodifiableList(analysisRequests);
     }
+
+	/**
+	 * Schedules the appointment and changes the status to 'Scheduled'.
+	 */
+	public void scheduled() {
+		if (status != null) {
+			throw new IllegalStateException("Appointment must be in a null status to mark as scheduled.");
+		}
+		this.status = "Scheduled";
+		System.out.println("Appointment scheduled successfully with ID: " + id);
+
+		AppointmentScheduled event = new AppointmentScheduled(this.id, this.clientId, this.date, this.status);
+		publishEvent(event);
+	}
 
     /**
      * Completes the appointment and changes the status to 'Completed'.
@@ -93,10 +108,10 @@ public class Appointment extends AggregateRoot {
     }
 
     /**
-     * Placeholder for publishing logic. Replace this with actual event bus logic in a real-world system.
+     * Placeholder for publishing logic
      */
-    private void publishEvent(AppointmentCompleted event) {
-        System.out.println("Publishing event: " + event);
+    private void publishEvent(DomainEvent event) {
+        addDomainEvent(event);
     }
 
     // Empty constructor for serialization in Hibernate

@@ -16,4 +16,9 @@ public class NutritionalPlanDelivered extends DomainEvent {
     public UUID getAppointmentId() {
         return nutritionalPlanId;
     }
+
+	@Override
+	public String getEventType() {
+		return "NUTRITIONAL_PLAN_DELIVERED";
+	}
 }

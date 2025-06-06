@@ -1,6 +1,8 @@
 package com.core.domain.models.nutritionalPlan;
 
 import com.core.domain.abstracts.AggregateRoot;
+import com.core.domain.abstracts.DomainEvent;
+import com.core.domain.models.nutritionalPlan.events.NutritionalPlanCreated;
 import com.core.domain.models.nutritionalPlan.events.NutritionalPlanDelivered;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class NutritionalPlan extends AggregateRoot {
         this.planDetails = planDetails;
         this.analysisResults = new ArrayList<>();
         this.isDelivered = false;
+		publishEvent(new NutritionalPlanCreated(this.id, this.clientId, this.nutritionistId, this.planDetails));
     }
 
     public NutritionalPlan(UUID id, UUID clientId, UUID nutritionistId, String planDetails, List<UUID> analysisResults, boolean isDelivered) {
@@ -84,10 +87,10 @@ public class NutritionalPlan extends AggregateRoot {
     }
 
     /**
-     * Placeholder for publishing logic. Replace this with actual event bus logic in a real-world system.
+     * Placeholder for publishing logic
      */
-    private void publishEvent(NutritionalPlanDelivered event) {
-        System.out.println("Publishing event: " + event);
+    private void publishEvent(DomainEvent event) {
+		addDomainEvent(event);
     }
 
     private NutritionalPlan() {

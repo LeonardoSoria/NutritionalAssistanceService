@@ -2,6 +2,7 @@ package com.core.testingmodule.application.appointment.createAppointment;
 
 import com.core.application.appointment.createAppointment.CreateAppointmentCommand;
 import com.core.application.appointment.createAppointment.CreateAppointmentHandler;
+import com.core.application.outbox.OutboxService;
 import com.core.domain.models.appointment.Appointment;
 import com.core.domain.models.appointment.IAppointmentRepository;
 import com.core.domain.shared.DateValue;
@@ -21,13 +22,15 @@ class CreateAppointmentHandlerTest {
 
     @Mock
     private IAppointmentRepository appointmentRepository;
+	@Mock
+	private OutboxService outboxService;
 
     private CreateAppointmentHandler handler;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        handler = new CreateAppointmentHandler(appointmentRepository);
+        handler = new CreateAppointmentHandler(appointmentRepository, outboxService);
     }
 
     @Test

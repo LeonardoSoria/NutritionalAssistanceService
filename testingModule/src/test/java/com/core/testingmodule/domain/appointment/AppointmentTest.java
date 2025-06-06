@@ -23,6 +23,7 @@ public class AppointmentTest {
         clientId = UUID.randomUUID();
         date = mock(DateValue.class);
         appointment = new Appointment(clientId, date);
+		appointment.scheduled();
     }
 
     @Test
