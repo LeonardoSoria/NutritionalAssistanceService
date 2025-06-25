@@ -10,13 +10,17 @@ import lombok.Getter;
 public class CreateUserCommand implements Command<User> {
 
     String username;
+    String password;
     String email;
     String fullName;
+    String address;
 
-    public CreateUserCommand(String username, String email, String fullName) {
+    public CreateUserCommand(String username, String password, String email, String fullName, String address) {
         this.username = username;
+        this.password = password;
         this.email = email;
         this.fullName = fullName;
+        this.address = address;
     }
 
 }

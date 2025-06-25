@@ -35,8 +35,10 @@ public class UserController {
 		@RequestBody @Valid CreateUserRequest createUserRequest) {
 		CreateUserCommand createUserCommand = new CreateUserCommand(
 			createUserRequest.getUsername(),
+			createUserRequest.getPassword(),
 			createUserRequest.getEmail(),
-			createUserRequest.getFullName()
+			createUserRequest.getFullName(),
+			createUserRequest.getAddress()
 		);
 		User createdUser = createUserCommand.execute(pipeline);
 		UserResponse response = UserMapper.mapToUserResponse(createdUser);
