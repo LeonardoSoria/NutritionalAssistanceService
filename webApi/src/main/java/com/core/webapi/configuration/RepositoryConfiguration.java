@@ -10,6 +10,7 @@ import com.core.infrastructure.repository.outbox.OutboxRepositoryImpl;
 import com.core.infrastructure.repository.user.UserRepositoryImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class RepositoryConfiguration {
@@ -32,5 +33,10 @@ public class RepositoryConfiguration {
 	@Bean(name = "iUserRepository")
 	public IUserRepository iUserRepository() {
 		return new UserRepositoryImpl();
+	}
+
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
 	}
 }

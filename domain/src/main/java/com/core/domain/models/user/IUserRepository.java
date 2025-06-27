@@ -1,8 +1,5 @@
 package com.core.domain.models.user;
 
-import com.core.domain.models.appointment.Appointment;
-import com.core.domain.models.nutritionalPlan.NutritionalPlan;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -10,15 +7,15 @@ import java.util.UUID;
 public interface IUserRepository {
 
     /**
-     * Finds an appointment by its ID.
+     * Finds a user by its ID.
      *
-     * @param id The UUID of the appointment.
+     * @param id The UUID of the user.
      * @return An Optional containing the user if found, otherwise empty.
      */
     Optional<User> findById(UUID id);
 
     /**
-     * Finds an appointment by its ID.
+     * Finds a user by its ID.
      *
      * @param username The string value of the username.
      * @return A List containing the users if found, otherwise empty.
@@ -26,9 +23,19 @@ public interface IUserRepository {
     List<User> findByUsername(String username);
 
 	/**
+	 * Finds an appointment by its ID.
+	 *
+	 * @param email The string value of the email.
+	 * @param password The string value of the password.
+	 * @return A List containing the users if found, otherwise empty.
+	 */
+	User login(String email, String password);
+
+	/**
 	 * Saves or Updates an existing User.
 	 *
 	 * @param user The User to save/update.
+	 * @return A User updated or created.
 	 */
 	User upsert(User user);
 }

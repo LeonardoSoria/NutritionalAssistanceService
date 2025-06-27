@@ -1,4 +1,4 @@
-package com.core.application.user;
+package com.core.application.user.create;
 
 import an.awesome.pipelinr.Command;
 import com.core.application.outbox.OutboxService;
@@ -25,7 +25,7 @@ public class CreateUserHandler implements Command.Handler<CreateUserCommand, Use
 	@Override
 	public User handle(CreateUserCommand command) {
 		User user = userFactory.create(command.username, command.password,
-			command.email, command.fullName, command.address);
+			command.email, command.fullName, command.address, command.role);
 
 		userRepository.upsert(user);
 

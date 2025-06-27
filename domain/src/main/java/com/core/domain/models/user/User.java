@@ -16,26 +16,29 @@ public class User extends AggregateRoot {
     private final String email;
     private final String fullName;
     private final String address;
+    private final String role;
     private final DateValue createdAt;
 
-    public User(String username, String password, String email, String fullName, String address) {
+    public User(String username, String password, String email, String fullName, String address, String role) {
         this.id = UUID.randomUUID();
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.fullName = fullName;
 		this.address = address;
+		this.role = role;
 		this.createdAt = DateValue.from(LocalDate.now());
 		publishEvent(new UserCreated(this.id, this.username, this.password, this.email, this.fullName, this.address, this.createdAt));
     }
 
-    public User(UUID id, String username, String password, String email, String fullName, String address, DateValue createdAt) {
+    public User(UUID id, String username, String password, String email, String fullName, String address, String role, DateValue createdAt) {
         this.id = id;
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.fullName = fullName;
 		this.address = address;
+		this.role = role;
 		this.createdAt = createdAt;
     }
 
@@ -63,6 +66,10 @@ public class User extends AggregateRoot {
 		return address;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
 	public DateValue getCreatedAt() {
 		return createdAt;
 	}
@@ -81,6 +88,7 @@ public class User extends AggregateRoot {
         this.fullName = null;
         this.email = null;
         this.address = null;
+        this.role = null;
         this.createdAt = null;
     }
 }

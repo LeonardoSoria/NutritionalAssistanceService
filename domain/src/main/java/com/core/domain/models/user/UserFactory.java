@@ -14,7 +14,7 @@ public class UserFactory implements IUserFactory {
 	 * @throws IllegalArgumentException if username, email or fullName is null or invalid.
 	 */
 	@Override
-	public User create(String username, String password, String email, String fullName, String address) {
+	public User create(String username, String password, String email, String fullName, String address, String role) {
 		if (username == null) {
 			throw new IllegalArgumentException("username is required and cannot be null.");
 		}
@@ -30,6 +30,9 @@ public class UserFactory implements IUserFactory {
 		if (address == null) {
 			throw new IllegalArgumentException("address is required and cannot be null.");
 		}
-		return new User(username, password, email, fullName, address);
+		if (role == null) {
+			throw new IllegalArgumentException("role is required and cannot be null.");
+		}
+		return new User(username, password, email, fullName, address, role);
 	}
 }
