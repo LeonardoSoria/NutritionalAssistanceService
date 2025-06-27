@@ -10,23 +10,27 @@ public class UserCreated extends DomainEvent {
 
 	private final UUID id;
 	private final String username;
+	private final String password;
 	private final String email;
 	private final String fullName;
+	private final String address;
 	private final LocalDate createdAt;
 
-    public UserCreated(UUID id, String username, String email, String fullName, DateValue createdAt) {
-        super();
-        this.id = id;
+	public UserCreated(UUID id, String username, String password, String email, String fullName, String address, DateValue createdAt) {
+		super();
+		this.id = id;
 		this.username = username;
+		this.password = password;
 		this.email = email;
 		this.fullName = fullName;
+		this.address = address;
 		this.createdAt = createdAt.toLocalDate();
 
-    }
+	}
 
-    public UUID getId() {
-        return id;
-    }
+	public UUID getId() {
+		return id;
+	}
 
 	public String getUsername() {
 		return username;
@@ -47,5 +51,13 @@ public class UserCreated extends DomainEvent {
 	@Override
 	public String getEventType() {
 		return "USER_CREATED";
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getAddress() {
+		return address;
 	}
 }

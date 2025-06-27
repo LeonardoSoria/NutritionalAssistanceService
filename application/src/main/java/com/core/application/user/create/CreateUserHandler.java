@@ -1,4 +1,4 @@
-package com.core.application.user;
+package com.core.application.user.create;
 
 import an.awesome.pipelinr.Command;
 import com.core.application.outbox.OutboxService;
@@ -12,20 +12,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class CreateUserHandler implements Command.Handler<CreateUserCommand, User> {
 
-    private final IUserFactory userFactory;
-    private final IUserRepository userRepository;
+	private final IUserFactory userFactory;
+	private final IUserRepository userRepository;
 	private final OutboxService outboxService;
 
-    public CreateUserHandler(IUserRepository userRepository, OutboxService outboxService) {
-        this.userFactory = new UserFactory();
-        this.userRepository = userRepository;
+	public CreateUserHandler(IUserRepository userRepository, OutboxService outboxService) {
+		this.userFactory = new UserFactory();
+		this.userRepository = userRepository;
 		this.outboxService = outboxService;
-    }
+	}
 
-    @Override
-    public User handle(CreateUserCommand command) {
-        User user = userFactory.create(command.username,
-                command.email, command.fullName);
+	@Override
+	public User handle(CreateUserCommand command) {
+		User user = userFactory.create(command.username, command.password,
+			command.email, command.fullName, command.address, command.role);
 
 		userRepository.upsert(user);
 
@@ -35,6 +35,6 @@ public class CreateUserHandler implements Command.Handler<CreateUserCommand, Use
 
 		user.clearDomainEvents();
 
-        return user;
-    }
+		return user;
+	}
 }

@@ -12,24 +12,33 @@ public class User extends AggregateRoot {
 
     private final UUID id;
     private final String username;
+    private final String password;
     private final String email;
     private final String fullName;
+    private final String address;
+    private final String role;
     private final DateValue createdAt;
 
-    public User(String username, String email, String fullName) {
+    public User(String username, String password, String email, String fullName, String address, String role) {
         this.id = UUID.randomUUID();
 		this.username = username;
+		this.password = password;
 		this.email = email;
 		this.fullName = fullName;
+		this.address = address;
+		this.role = role;
 		this.createdAt = DateValue.from(LocalDate.now());
-		publishEvent(new UserCreated(this.id, this.username, this.email, this.fullName, this.createdAt));
+		publishEvent(new UserCreated(this.id, this.username, this.password, this.email, this.fullName, this.address, this.createdAt));
     }
 
-    public User(UUID id, String username, String email, String fullName, DateValue createdAt) {
+    public User(UUID id, String username, String password, String email, String fullName, String address, String role, DateValue createdAt) {
         this.id = id;
 		this.username = username;
+		this.password = password;
 		this.email = email;
 		this.fullName = fullName;
+		this.address = address;
+		this.role = role;
 		this.createdAt = createdAt;
     }
 
@@ -41,12 +50,24 @@ public class User extends AggregateRoot {
 		return username;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
 	public String getEmail() {
 		return email;
 	}
 
 	public String getFullName() {
 		return fullName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public String getRole() {
+		return role;
 	}
 
 	public DateValue getCreatedAt() {
@@ -63,8 +84,11 @@ public class User extends AggregateRoot {
     private User() {
         this.id = null;
         this.username = null;
+        this.password = null;
         this.fullName = null;
         this.email = null;
+        this.address = null;
+        this.role = null;
         this.createdAt = null;
     }
 }

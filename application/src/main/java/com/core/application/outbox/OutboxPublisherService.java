@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.annotation.PreDestroy;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +43,7 @@ public class OutboxPublisherService {
 			.buildProducerClient();
 	}
 
-	@Scheduled(fixedDelay = 10000)
+	@Scheduled(fixedDelay = 20000)
 	public void processOutboxMessages() {
 		List<OutboxMessage> messages = outboxRepository.findByProcessed(false);
 

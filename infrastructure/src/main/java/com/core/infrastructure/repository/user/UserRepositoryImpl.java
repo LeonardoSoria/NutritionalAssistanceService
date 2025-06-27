@@ -35,6 +35,19 @@ public class UserRepositoryImpl implements IUserRepository {
 	}
 
 	@Override
+	public User login(String email, String password) {
+		User user = userCrudRepository.findByEmail(email)
+			.stream()
+			.findFirst()
+			.map(UserPersistenceMapper::toDomainModel)
+			.orElse(null);
+		if (user != null && !user.getPassword().equals(password)) {
+			return null;
+		}
+		return user;
+	}
+
+	@Override
 	public User upsert(User user) {
 		UserEntity userEntity = UserPersistenceMapper.toEntity(user);
 		UserEntity savedEntity = userCrudRepository.save(userEntity);

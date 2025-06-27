@@ -1,7 +1,5 @@
 package com.core.domain.models.outbox;
 
-import com.core.domain.models.nutritionalPlan.events.NutritionalPlanDelivered;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 

@@ -13,8 +13,11 @@ public class UserPersistenceMapper {
 		return new User(
 			entity.getId(),
 			entity.getUsername(),
+			entity.getPassword(),
 			entity.getEmail(),
 			entity.getFullName(),
+			entity.getAddress(),
+			entity.getRole(),
 			DateValue.from(LocalDate.parse(entity.getCreatedAt()))
 		);
 	}
@@ -25,8 +28,11 @@ public class UserPersistenceMapper {
 		return new UserEntity(
 			domain.getId(),
 			domain.getUsername(),
+			domain.getPassword(),
 			domain.getEmail(),
 			domain.getFullName(),
+			domain.getAddress(),
+			domain.getRole(),
 			date
 		);
 	}

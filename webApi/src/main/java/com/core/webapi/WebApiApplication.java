@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         basePackages = {
                 "com.core.webapi.controller",
                 "com.core.infrastructure.repository",
+                "com.core.infrastructure.auth",
                 "com.core.application",
                 "com.core.domain.models",
                 "com.core.domain.abstracts"
