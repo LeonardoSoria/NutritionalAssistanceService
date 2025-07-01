@@ -36,6 +36,7 @@ public class LoginUserHandler implements Command.Handler<LoginUserCommand, Login
 		loginDto.setUserId(userLogged.getId());
 		loginDto.setUsername(userLogged.getUsername());
 		loginDto.setEmail(userLogged.getEmail());
+		loginDto.setRole(userLogged.getRole());
 
 		return loginDto;
 	}

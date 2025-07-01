@@ -51,7 +51,8 @@ public class UserController {
 		);
 		LoginDto loginDto = loginCommand.execute(pipeline);
 
-		LoginResponse response = new LoginResponse(loginDto.getToken(), loginDto.getTokenType(), loginDto.getExpiresIn(), loginDto.getUserId(), loginDto.getUsername(), loginDto.getEmail());
+		LoginResponse response = new LoginResponse(loginDto.getToken(), loginDto.getTokenType(), loginDto.getExpiresIn(),
+			loginDto.getUserId(), loginDto.getUsername(), loginDto.getEmail(), loginDto.getRole());
 		return ResponseEntity.ok(response);
 	}
 }
