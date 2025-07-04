@@ -18,6 +18,6 @@ public class GetAppointmentsHandler implements Command.Handler<GetAppointmentsQu
 
     @Override
     public List<Appointment> handle(GetAppointmentsQuery query) {
-        return appointmentRepository.findByClientId(query.clientId);
+        return appointmentRepository.findByNutritionistId(query.nutritionistId);
     }
 }

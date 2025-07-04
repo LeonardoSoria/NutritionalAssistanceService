@@ -12,9 +12,9 @@ import java.util.UUID;
 @Getter
 public class GetAppointmentsQuery implements Command<List<Appointment>> {
 
-    UUID clientId;
+    UUID nutritionistId;
 
-    public GetAppointmentsQuery(UUID clientId) {
-        this.clientId = clientId;
+    public GetAppointmentsQuery(UUID nutritionistId) {
+        this.nutritionistId = nutritionistId;
     }
 }

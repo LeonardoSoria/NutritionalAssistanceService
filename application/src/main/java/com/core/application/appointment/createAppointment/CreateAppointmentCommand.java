@@ -13,10 +13,12 @@ import java.util.UUID;
 public class CreateAppointmentCommand implements Command<Appointment> {
 
     UUID clientId;
+    UUID nutritionistId;
     DateValue appointmentDate;
 
-    public CreateAppointmentCommand(UUID clientId, DateValue appointmentDate) {
+    public CreateAppointmentCommand(UUID clientId, UUID nutritionistId, DateValue appointmentDate) {
         this.clientId = clientId;
+        this.nutritionistId = nutritionistId;
         this.appointmentDate = appointmentDate;
     }
 

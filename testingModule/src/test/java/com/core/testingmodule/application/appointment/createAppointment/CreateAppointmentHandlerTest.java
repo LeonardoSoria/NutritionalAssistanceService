@@ -37,9 +37,10 @@ class CreateAppointmentHandlerTest {
     void testHandleCreatesAndUpdatesAppointment() {
         // Arrange
         UUID clientId = UUID.randomUUID();
+        UUID nutritionistId = UUID.randomUUID();
         DateValue appointmentDate = new DateValue(LocalDate.now());  // Example appointment date
 
-        CreateAppointmentCommand command = new CreateAppointmentCommand(clientId, appointmentDate);
+        CreateAppointmentCommand command = new CreateAppointmentCommand(clientId, nutritionistId, appointmentDate);
 
         // Act
         Appointment result = handler.handle(command);
@@ -52,6 +53,7 @@ class CreateAppointmentHandlerTest {
 
         // Verify that the captured Appointment contains the expected data
         assertEquals(clientId, capturedAppointment.getClientId());
+        assertEquals(nutritionistId, capturedAppointment.getNutritionistId());
         assertEquals(appointmentDate, capturedAppointment.getDate());
 
         // Verify the returned Appointment is the same instance

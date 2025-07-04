@@ -20,6 +20,7 @@ public class AppointmentPersistenceMapper {
         Appointment appointment = new Appointment(
                 entity.getId(),
                 entity.getClientId(),
+                entity.getNutritionistId(),
                 DateValue.from(LocalDate.parse(entity.getDate())),
                 entity.getStatus(),
                 Collections.emptyList()
@@ -45,6 +46,7 @@ public class AppointmentPersistenceMapper {
         appointment = new Appointment(
                 entity.getId(),
                 entity.getClientId(),
+                entity.getNutritionistId(),
                 DateValue.from(LocalDate.parse(entity.getDate())),
                 entity.getStatus(),
                 analysisRequests
@@ -87,6 +89,7 @@ public class AppointmentPersistenceMapper {
         AppointmentEntity entity = new AppointmentEntity(
                 domain.getId(),
                 domain.getClientId(),
+                domain.getNutritionistId(),
                 date,
                 domain.getStatus(),
                 analysisRequestEntities

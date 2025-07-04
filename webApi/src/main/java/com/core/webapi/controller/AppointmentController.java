@@ -33,6 +33,7 @@ public class AppointmentController {
             @RequestBody @Valid CreateAppointmentRequest createAppointmentRequest) {
         CreateAppointmentCommand createAppointmentCommand = new CreateAppointmentCommand(
                 UUID.fromString(createAppointmentRequest.getClientId()),
+                UUID.fromString(createAppointmentRequest.getNutritionistId()),
                 DateValue.from(createAppointmentRequest.getAppointmentDate())
         );
         Appointment createdAppointment = createAppointmentCommand.execute(pipeline);
@@ -52,9 +53,9 @@ public class AppointmentController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("/client/{clientId}")
-    public ResponseEntity<List<AppointmentResponse>> createAppointment(@PathVariable String clientId) {
-        GetAppointmentsQuery getAppointmentsQuery = new GetAppointmentsQuery(UUID.fromString(clientId));
+    @GetMapping("/client/{nutritionistId}")
+    public ResponseEntity<List<AppointmentResponse>> createAppointment(@PathVariable String nutritionistId) {
+        GetAppointmentsQuery getAppointmentsQuery = new GetAppointmentsQuery(UUID.fromString(nutritionistId));
         List<Appointment> appointments = getAppointmentsQuery.execute(pipeline);
         List<AppointmentResponse> responseList = AppointmentMapper.mapToAppointmentResponseList(appointments);
         return new ResponseEntity<>(responseList, HttpStatus.OK);

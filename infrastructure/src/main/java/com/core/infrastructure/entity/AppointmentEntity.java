@@ -21,6 +21,8 @@ public class AppointmentEntity {
 
     private UUID clientId;
 
+	private UUID nutritionistId;
+
     private String date;
 
     private String status;

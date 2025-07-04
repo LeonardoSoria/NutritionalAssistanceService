@@ -32,6 +32,7 @@ class AppointmentRepositoryImplTest {
     private AppointmentRepositoryImpl appointmentRepositoryImpl;
 
     private UUID clientId;
+    private UUID nutritionistId;
     private AppointmentEntity appointmentEntity;
     private Appointment appointment;
 
@@ -40,8 +41,9 @@ class AppointmentRepositoryImplTest {
         MockitoAnnotations.openMocks(this);
         DateValue dateValue = new DateValue(LocalDate.now());
         clientId = UUID.randomUUID();
+		nutritionistId = UUID.randomUUID();
 
-        appointment = new Appointment(clientId, dateValue);
+        appointment = new Appointment(clientId, nutritionistId, dateValue);
         appointmentEntity = new AppointmentEntity();
         appointmentEntity.setId(appointment.getId());
         appointmentEntity.setClientId(clientId);
@@ -76,17 +78,17 @@ class AppointmentRepositoryImplTest {
     }
 
     @Test
-    void testFindByClientId() {
-        when(appointmentRepository.findByClientId(clientId)).thenReturn(List.of(appointmentEntity));
+    void testFindByNutritionistId() {
+        when(appointmentRepository.findByNutritionistId(nutritionistId)).thenReturn(List.of(appointmentEntity));
 
         try (MockedStatic<AppointmentPersistenceMapper> mockedMapper = mockStatic(AppointmentPersistenceMapper.class)) {
             mockedMapper.when(() -> AppointmentPersistenceMapper.toDomainModel(appointmentEntity)).thenReturn(appointment);
 
-            List<Appointment> results = appointmentRepositoryImpl.findByClientId(clientId);
+            List<Appointment> results = appointmentRepositoryImpl.findByNutritionistId(nutritionistId);
 
             assertThat(results).hasSize(1);
             assertThat(results.get(0).getId()).isEqualTo(appointment.getId());
-            verify(appointmentRepository, times(1)).findByClientId(clientId);
+            verify(appointmentRepository, times(1)).findByNutritionistId(nutritionistId);
         }
     }
 

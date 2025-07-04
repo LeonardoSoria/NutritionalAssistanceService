@@ -24,10 +24,11 @@ class AppointmentFactoryTest {
     void testCreate_ValidClientIdAndDate_ShouldCreateAppointment() {
         // Arrange
         UUID clientId = UUID.randomUUID();
+        UUID nutritionistId = UUID.randomUUID();
         DateValue date = new DateValue(LocalDate.of(2025, 2, 19));
 
         // Act
-        Appointment appointment = appointmentFactory.create(clientId, date);
+        Appointment appointment = appointmentFactory.create(clientId, nutritionistId, date);
 
         // Assert
         assertNotNull(appointment);
@@ -39,11 +40,12 @@ class AppointmentFactoryTest {
     void testCreate_NullClientId_ShouldThrowIllegalArgumentException() {
         // Arrange
         UUID clientId = null;
+        UUID nutritionistId = null;
         DateValue date = new DateValue(LocalDate.of(2025, 2, 19));
 
         // Act & Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            appointmentFactory.create(clientId, date);
+            appointmentFactory.create(clientId, nutritionistId, date);
         });
         assertEquals("Client ID must be a positive non-null value.", exception.getMessage());
     }
@@ -52,11 +54,12 @@ class AppointmentFactoryTest {
     void testCreate_NullDate_ShouldThrowIllegalArgumentException() {
         // Arrange
         UUID clientId = UUID.randomUUID();
+        UUID nutritionistId = UUID.randomUUID();
         DateValue date = null;
 
         // Act & Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            appointmentFactory.create(clientId, date);
+            appointmentFactory.create(clientId, nutritionistId, date);
         });
         assertEquals("Date value is required.", exception.getMessage());
     }
@@ -65,11 +68,12 @@ class AppointmentFactoryTest {
     void testCreate_NullClientIdAndNullDate_ShouldThrowIllegalArgumentException() {
         // Arrange
         UUID clientId = null;
+        UUID nutritionistId = null;
         DateValue date = null;
 
         // Act & Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            appointmentFactory.create(clientId, date);
+            appointmentFactory.create(clientId, nutritionistId, date);
         });
         assertEquals("Client ID must be a positive non-null value.", exception.getMessage());
     }

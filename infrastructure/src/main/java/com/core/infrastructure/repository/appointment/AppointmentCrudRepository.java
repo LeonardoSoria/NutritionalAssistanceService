@@ -10,5 +10,5 @@ import java.util.UUID;
 @Repository
 public interface AppointmentCrudRepository extends CrudRepository<AppointmentEntity, UUID> {
 
-    List<AppointmentEntity> findByClientId(UUID clientId);
+    List<AppointmentEntity> findByNutritionistId(UUID clientId);
 }

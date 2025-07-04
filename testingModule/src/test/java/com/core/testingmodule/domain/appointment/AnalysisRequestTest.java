@@ -21,8 +21,9 @@ class AnalysisRequestTest {
     void setUp() {
         // Create a valid Appointment and DateValue for setup
         UUID clientId = UUID.randomUUID();
+        UUID nutritionistId = UUID.randomUUID();
         requestedDate = new DateValue(LocalDate.of(2025, 2, 19));
-        appointment = new Appointment(clientId, requestedDate);
+        appointment = new Appointment(clientId, nutritionistId, requestedDate);
 
         // Create an AnalysisRequest
         analysisRequest = new AnalysisRequest(appointment, requestedDate);

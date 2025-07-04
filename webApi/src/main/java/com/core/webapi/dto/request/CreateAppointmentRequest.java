@@ -13,6 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class CreateAppointmentRequest {
     private String clientId;
+    private String nutritionistId;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate appointmentDate;
 }

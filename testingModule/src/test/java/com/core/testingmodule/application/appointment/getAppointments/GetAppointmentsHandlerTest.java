@@ -31,23 +31,24 @@ class GetAppointmentsHandlerTest {
     }
 
     @Test
-    void testHandleReturnsAppointmentsForClient() {
+    void testHandleReturnsAppointmentsForNutritionist() {
         // Arrange
         UUID clientId = UUID.randomUUID();
+        UUID nutritionistId = UUID.randomUUID();
         DateValue dateValue = new DateValue(LocalDate.now());
-        Appointment appointment1 = new Appointment(clientId, dateValue);
-        Appointment appointment2 = new Appointment(clientId, dateValue);
+        Appointment appointment1 = new Appointment(clientId, nutritionistId, dateValue);
+        Appointment appointment2 = new Appointment(clientId, nutritionistId, dateValue);
         List<Appointment> expectedAppointments = List.of(appointment1, appointment2);
 
-        when(appointmentRepository.findByClientId(clientId)).thenReturn(expectedAppointments);
+        when(appointmentRepository.findByNutritionistId(nutritionistId)).thenReturn(expectedAppointments);
 
-        GetAppointmentsQuery query = new GetAppointmentsQuery(clientId);
+        GetAppointmentsQuery query = new GetAppointmentsQuery(nutritionistId);
 
         // Act
         List<Appointment> result = handler.handle(query);
 
         // Assert
-        verify(appointmentRepository).findByClientId(clientId);
+        verify(appointmentRepository).findByNutritionistId(nutritionistId);
         assertEquals(expectedAppointments, result);
     }
 }

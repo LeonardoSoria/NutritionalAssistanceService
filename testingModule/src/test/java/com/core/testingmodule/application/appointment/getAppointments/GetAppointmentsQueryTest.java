@@ -12,12 +12,12 @@ class GetAppointmentsQueryTest {
     @Test
     void testGetAppointmentsQueryConstructor() {
         // Arrange
-        UUID clientId = UUID.randomUUID();
+        UUID nutritionistId = UUID.randomUUID();
 
         // Act
-        GetAppointmentsQuery query = new GetAppointmentsQuery(clientId);
+        GetAppointmentsQuery query = new GetAppointmentsQuery(nutritionistId);
 
         // Assert
-        assertEquals(clientId, query.getClientId());
+        assertEquals(nutritionistId, query.getNutritionistId());
     }
 }

@@ -27,7 +27,7 @@ public class CreateAppointmentHandler implements Command.Handler<CreateAppointme
 
 	@Override
 	public Appointment handle(CreateAppointmentCommand command) {
-		Appointment appointment = appointmentFactory.create(command.clientId, command.appointmentDate);
+		Appointment appointment = appointmentFactory.create(command.clientId, command.nutritionistId, command.appointmentDate);
 		appointment.scheduled();
 
 		appointmentRepository.update(appointment);
