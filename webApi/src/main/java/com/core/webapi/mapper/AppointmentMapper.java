@@ -41,7 +41,9 @@ public class AppointmentMapper {
 		return AppointmentResponse.builder()
 			.id(appointment.getId())
 			.clientId(appointment.getClientId())
+			.clientName(appointment.getClientName())
 			.nutritionistId(appointment.getNutritionistId())
+			.nutritionistName(appointment.getNutritionistName())
 			.date(appointment.getDate())
 			.status(appointment.getStatus())
 			.analysisRequestResponses(

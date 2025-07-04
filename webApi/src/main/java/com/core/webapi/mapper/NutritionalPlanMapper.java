@@ -31,9 +31,11 @@ public class NutritionalPlanMapper {
 		}
 
 		return NutritionalPlanResponse.builder()
-			.id(nutritionalPlanDto.getId().toString())
-			.clientId(nutritionalPlanDto.getClientId().toString())
-			.nutritionistId(nutritionalPlanDto.getNutritionistId().toString())
+			.id(nutritionalPlanDto.getId())
+			.clientId(nutritionalPlanDto.getClientId())
+			.clientName(nutritionalPlanDto.getClientName())
+			.nutritionistId(nutritionalPlanDto.getNutritionistId())
+			.nutritionistName(nutritionalPlanDto.getNutritionistName())
 			.planDetails(nutritionalPlanDto.getPlanDetails())
 			.isDelivered(nutritionalPlanDto.isDelivered())
 			.analysisResults(nutritionalPlanDto.getAnalysisResults())
