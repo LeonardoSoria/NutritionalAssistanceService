@@ -60,18 +60,21 @@ class AppointmentEntityTest {
 		AppointmentEntity entity = new AppointmentEntity();
 		UUID newId = UUID.randomUUID();
 		UUID newClientId = UUID.randomUUID();
+		UUID newNutritionistId = UUID.randomUUID();
 		String newDate = "2025-02-25";
 		String newStatus = "Completed";
 		List<AnalysisRequestEntity> newRequests = new ArrayList<>();
 
 		entity.setId(newId);
 		entity.setClientId(newClientId);
+		entity.setNutritionistId(newNutritionistId);
 		entity.setDate(newDate);
 		entity.setStatus(newStatus);
 		entity.setAnalysisRequests(newRequests);
 
 		assertEquals(newId, entity.getId());
 		assertEquals(newClientId, entity.getClientId());
+		assertEquals(newNutritionistId, entity.getNutritionistId());
 		assertEquals(newDate, entity.getDate());
 		assertEquals(newStatus, entity.getStatus());
 		assertEquals(newRequests, entity.getAnalysisRequests());
@@ -95,6 +98,7 @@ class AppointmentEntityTest {
 		assertTrue(toStringOutput.contains("AppointmentEntity"));
 		assertTrue(toStringOutput.contains(id.toString()));
 		assertTrue(toStringOutput.contains(clientId.toString()));
+		assertTrue(toStringOutput.contains(nutritionistId.toString()));
 		assertTrue(toStringOutput.contains(date));
 		assertTrue(toStringOutput.contains(status));
 	}
@@ -111,6 +115,7 @@ class AppointmentEntityTest {
 		AppointmentEntity emptyEntity = AppointmentEntity.builder()
 			.id(id)
 			.clientId(clientId)
+			.nutritionistId(nutritionistId)
 			.date(date)
 			.status(status)
 			.analysisRequests(Collections.emptyList())
