@@ -53,7 +53,7 @@ public class AppointmentController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("/client/{nutritionistId}")
+    @GetMapping("/nutritionist/{nutritionistId}")
     public ResponseEntity<List<AppointmentResponse>> createAppointment(@PathVariable String nutritionistId) {
         GetAppointmentsQuery getAppointmentsQuery = new GetAppointmentsQuery(UUID.fromString(nutritionistId));
         List<Appointment> appointments = getAppointmentsQuery.execute(pipeline);
