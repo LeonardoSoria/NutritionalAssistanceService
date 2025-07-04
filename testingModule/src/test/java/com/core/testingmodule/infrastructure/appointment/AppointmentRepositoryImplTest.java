@@ -47,6 +47,7 @@ class AppointmentRepositoryImplTest {
         appointmentEntity = new AppointmentEntity();
         appointmentEntity.setId(appointment.getId());
         appointmentEntity.setClientId(clientId);
+        appointmentEntity.setNutritionistId(nutritionistId);
         appointmentEntity.setDate(appointment.getDate().toLocalDate().toString());
         appointmentEntity.setStatus(appointment.getStatus());
         appointmentEntity.setAnalysisRequests(new ArrayList<>());
