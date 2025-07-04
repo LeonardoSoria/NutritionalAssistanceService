@@ -4,6 +4,7 @@ import an.awesome.pipelinr.Pipeline;
 import com.core.application.appointment.addAnalysisRequest.AddAnalysisRequestCommand;
 import com.core.application.appointment.createAppointment.CreateAppointmentCommand;
 import com.core.application.appointment.getAppointments.GetAppointmentsQuery;
+import com.core.application.appointment.getAppointments.dto.AppointmentDto;
 import com.core.domain.models.appointment.Appointment;
 import com.core.domain.shared.DateValue;
 import com.core.webapi.dto.request.AddAnalysisRequestRequest;
@@ -56,7 +57,7 @@ public class AppointmentController {
     @GetMapping("/nutritionist/{nutritionistId}")
     public ResponseEntity<List<AppointmentResponse>> createAppointment(@PathVariable String nutritionistId) {
         GetAppointmentsQuery getAppointmentsQuery = new GetAppointmentsQuery(UUID.fromString(nutritionistId));
-        List<Appointment> appointments = getAppointmentsQuery.execute(pipeline);
+        List<AppointmentDto> appointments = getAppointmentsQuery.execute(pipeline);
         List<AppointmentResponse> responseList = AppointmentMapper.mapToAppointmentResponseList(appointments);
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }

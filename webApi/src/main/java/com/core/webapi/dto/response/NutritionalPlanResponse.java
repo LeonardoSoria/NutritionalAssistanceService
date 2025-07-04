@@ -12,7 +12,9 @@ import java.util.List;
 public class NutritionalPlanResponse {
     private String id;
     private String clientId;
+    private String clientName;
     private String nutritionistId;
+    private String nutritionistName;
     private List<String> analysisResults;
     private boolean isDelivered;
     private String planDetails;

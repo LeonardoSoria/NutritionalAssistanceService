@@ -1,5 +1,6 @@
 package com.core.webapi.mapper;
 
+import com.core.application.appointment.getAppointments.dto.AppointmentDto;
 import com.core.domain.models.appointment.AnalysisRequest;
 import com.core.domain.models.appointment.AnalysisResult;
 import com.core.domain.models.appointment.Appointment;
@@ -32,7 +33,25 @@ public class AppointmentMapper {
                 .build();
     }
 
-    public static List<AppointmentResponse> mapToAppointmentResponseList(List<Appointment> appointments) {
+	public static AppointmentResponse mapToAppointmentResponse(AppointmentDto appointment) {
+		if (appointment == null) {
+			return null;
+		}
+
+		return AppointmentResponse.builder()
+			.id(appointment.getId())
+			.clientId(appointment.getClientId())
+			.nutritionistId(appointment.getNutritionistId())
+			.date(appointment.getDate())
+			.status(appointment.getStatus())
+			.analysisRequestResponses(
+				appointment.getAnalysisRequestResponses() != null
+					? mapToAnalysisRequestResponseList(appointment.getAnalysisRequestResponses())
+					: null)
+			.build();
+	}
+
+    public static List<AppointmentResponse> mapToAppointmentResponseList(List<AppointmentDto> appointments) {
         return appointments.stream()
                 .map(AppointmentMapper::mapToAppointmentResponse)
                 .collect(Collectors.toList());

@@ -1,6 +1,7 @@
 package com.core.application.nutritionalPlan.getNutritionalPlan;
 
 import an.awesome.pipelinr.Command;
+import com.core.application.nutritionalPlan.getNutritionalPlan.dto.NutritionalPlanDto;
 import com.core.domain.annotations.Generated;
 import com.core.domain.models.nutritionalPlan.NutritionalPlan;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import java.util.UUID;
 
 @Generated
 @Getter
-public class GetNutritionalPlanQuery implements Command<List<NutritionalPlan>> {
+public class GetNutritionalPlanQuery implements Command<List<NutritionalPlanDto>> {
 
     UUID nutritionistId;
 
