@@ -3,6 +3,7 @@ package com.core.webapi.controller;
 import an.awesome.pipelinr.Pipeline;
 import com.core.application.nutritionalPlan.createNutritionalPlan.CreateNutritionalPlanCommand;
 import com.core.application.nutritionalPlan.getNutritionalPlan.GetNutritionalPlanQuery;
+import com.core.application.nutritionalPlan.getNutritionalPlan.dto.NutritionalPlanDto;
 import com.core.domain.models.nutritionalPlan.NutritionalPlan;
 import com.core.webapi.dto.request.CreateNutritionalPlanRequest;
 import com.core.webapi.dto.response.NutritionalPlanResponse;
@@ -41,7 +42,7 @@ public class NutritionalPlanController {
     @GetMapping("/nutritionist/{nutritionistId}")
     public ResponseEntity<List<NutritionalPlanResponse>> getAppointmentByNutritionistId(@PathVariable String nutritionistId) {
         GetNutritionalPlanQuery getNutritionalPlanQuery = new GetNutritionalPlanQuery(UUID.fromString(nutritionistId));
-        List<NutritionalPlan> nutritionalPlans = getNutritionalPlanQuery.execute(pipeline);
+        List<NutritionalPlanDto> nutritionalPlans = getNutritionalPlanQuery.execute(pipeline);
         List<NutritionalPlanResponse> responseList = NutritionalPlanMapper.mapToNutritionalPlanList(nutritionalPlans);
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }

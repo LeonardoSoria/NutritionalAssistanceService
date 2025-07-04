@@ -1,5 +1,6 @@
 package com.core.webapi.mapper;
 
+import com.core.application.nutritionalPlan.getNutritionalPlan.dto.NutritionalPlanDto;
 import com.core.domain.models.nutritionalPlan.NutritionalPlan;
 import com.core.webapi.dto.response.NutritionalPlanResponse;
 
@@ -24,7 +25,22 @@ public class NutritionalPlanMapper {
                 .build();
     }
 
-    public static List<NutritionalPlanResponse> mapToNutritionalPlanList(List<NutritionalPlan> nutritionalPlans) {
+	public static NutritionalPlanResponse mapToNutritionalPlanResponse(NutritionalPlanDto nutritionalPlanDto) {
+		if (nutritionalPlanDto == null) {
+			return null;
+		}
+
+		return NutritionalPlanResponse.builder()
+			.id(nutritionalPlanDto.getId().toString())
+			.clientId(nutritionalPlanDto.getClientId().toString())
+			.nutritionistId(nutritionalPlanDto.getNutritionistId().toString())
+			.planDetails(nutritionalPlanDto.getPlanDetails())
+			.isDelivered(nutritionalPlanDto.isDelivered())
+			.analysisResults(nutritionalPlanDto.getAnalysisResults())
+			.build();
+	}
+
+    public static List<NutritionalPlanResponse> mapToNutritionalPlanList(List<NutritionalPlanDto> nutritionalPlans) {
         return nutritionalPlans.stream()
                 .map(NutritionalPlanMapper::mapToNutritionalPlanResponse)
                 .collect(Collectors.toList());
