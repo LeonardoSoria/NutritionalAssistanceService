@@ -17,10 +17,9 @@ public interface IUserRepository {
     /**
      * Finds a user by its ID.
      *
-     * @param username The string value of the username.
      * @return A List containing the users if found, otherwise empty.
      */
-    List<User> findByUsername(String username);
+    List<User> findUsers();
 
 	/**
 	 * Finds an appointment by its ID.

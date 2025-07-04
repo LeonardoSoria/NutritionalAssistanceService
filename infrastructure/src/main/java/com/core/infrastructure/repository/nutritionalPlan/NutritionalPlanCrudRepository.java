@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface NutritionalPlanCrudRepository extends CrudRepository<NutritionalPlanEntity, UUID> {
-    List<NutritionalPlanEntity> findByClientId(UUID clientId);
+    List<NutritionalPlanEntity> findByNutritionistId(UUID nutritionistId);
 }

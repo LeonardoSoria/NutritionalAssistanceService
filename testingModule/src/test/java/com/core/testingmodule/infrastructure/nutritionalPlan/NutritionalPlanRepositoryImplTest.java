@@ -77,17 +77,17 @@ class NutritionalPlanRepositoryImplTest {
     }
 
     @Test
-    void testFindByClientId() {
-        when(nutritionalPlanRepository.findByClientId(clientId)).thenReturn(List.of(nutritionalPlanEntity));
+    void testFindByNutritionistId() {
+        when(nutritionalPlanRepository.findByNutritionistId(nutritionistId)).thenReturn(List.of(nutritionalPlanEntity));
 
         try (MockedStatic<NutritionalPlanPersistenceMapper> mockedMapper = mockStatic(NutritionalPlanPersistenceMapper.class)) {
             mockedMapper.when(() -> NutritionalPlanPersistenceMapper.toDomainModel(nutritionalPlanEntity)).thenReturn(nutritionalPlan);
 
-            List<NutritionalPlan> results = nutritionalPlanRepositoryImpl.findByClientId(clientId);
+            List<NutritionalPlan> results = nutritionalPlanRepositoryImpl.findByNutritionistId(nutritionistId);
 
             assertThat(results).hasSize(1);
             assertThat(results.get(0).getId()).isEqualTo(nutritionalPlan.getId());
-            verify(nutritionalPlanRepository, times(1)).findByClientId(clientId);
+            verify(nutritionalPlanRepository, times(1)).findByNutritionistId(nutritionistId);
         }
     }
 

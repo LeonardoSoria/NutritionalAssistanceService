@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Repository
 @Primary
@@ -27,9 +28,9 @@ public class UserRepositoryImpl implements IUserRepository {
 	}
 
 	@Override
-	public List<User> findByUsername(String username) {
-		List<UserEntity> userEntities = userCrudRepository.findByUsername(username);
-		return userEntities.stream()
+	public List<User> findUsers() {
+		Iterable<UserEntity> userEntities = userCrudRepository.findAll();
+		return StreamSupport.stream(userEntities.spliterator(), false)
 			.map(UserPersistenceMapper::toDomainModel)
 			.collect(Collectors.toList());
 	}

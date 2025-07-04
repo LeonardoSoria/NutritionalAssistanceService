@@ -9,7 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface UserCrudRepository extends CrudRepository<UserEntity, UUID> {
-    List<UserEntity> findByUsername(String username);
-
 	List<UserEntity> findByEmail(String email);
 }
