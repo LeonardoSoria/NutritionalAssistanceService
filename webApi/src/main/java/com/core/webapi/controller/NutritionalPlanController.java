@@ -38,9 +38,9 @@ public class NutritionalPlanController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("/client/{clientId}")
-    public ResponseEntity<List<NutritionalPlanResponse>> createAppointment(@PathVariable String clientId) {
-        GetNutritionalPlanQuery getNutritionalPlanQuery = new GetNutritionalPlanQuery(UUID.fromString(clientId));
+    @GetMapping("/nutritionist/{nutritionistId}")
+    public ResponseEntity<List<NutritionalPlanResponse>> getAppointmentByNutritionistId(@PathVariable String nutritionistId) {
+        GetNutritionalPlanQuery getNutritionalPlanQuery = new GetNutritionalPlanQuery(UUID.fromString(nutritionistId));
         List<NutritionalPlan> nutritionalPlans = getNutritionalPlanQuery.execute(pipeline);
         List<NutritionalPlanResponse> responseList = NutritionalPlanMapper.mapToNutritionalPlanList(nutritionalPlans);
         return new ResponseEntity<>(responseList, HttpStatus.OK);

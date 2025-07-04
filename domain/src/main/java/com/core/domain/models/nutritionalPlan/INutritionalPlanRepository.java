@@ -17,10 +17,10 @@ public interface INutritionalPlanRepository {
     /**
      * Finds a NutritionalPlan by a clientId.
      *
-     * @param clientId The UUID of the NutritionalPlan.
-     * @return An Optional containing the NutritionalPlan if found, otherwise empty.
+     * @param nutritionistId The UUID of the nutritionist.
+     * @return A List of NutritionalPlan if found, otherwise empty.
      */
-    List<NutritionalPlan> findByClientId(UUID clientId);
+    List<NutritionalPlan> findByNutritionistId(UUID nutritionistId);
 
     /**
      * Updates an existing NutritionalPlan.

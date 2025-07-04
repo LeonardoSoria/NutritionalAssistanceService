@@ -13,26 +13,26 @@ class GetNutritionalPlanQueryTest {
     @Test
     void testConstructor_Successful_WhenValidClientId() {
         // Arrange
-        UUID clientId = UUID.randomUUID();
+        UUID nutritionistId = UUID.randomUUID();
 
         // Act
-        GetNutritionalPlanQuery query = new GetNutritionalPlanQuery(clientId);
+        GetNutritionalPlanQuery query = new GetNutritionalPlanQuery(nutritionistId);
 
         // Assert
         assertNotNull(query, "GetNutritionalPlanQuery instance should be created.");
-        assertEquals(clientId, query.getClientId(), "The clientId should be set correctly.");
+        assertEquals(nutritionistId, query.getNutritionistId(), "The nutritionistId should be set correctly.");
     }
 
     @Test
     void testGetClientId_ReturnsCorrectClientId() {
         // Arrange
-        UUID clientId = UUID.randomUUID();
-        GetNutritionalPlanQuery query = new GetNutritionalPlanQuery(clientId);
+        UUID nutritionistId = UUID.randomUUID();
+        GetNutritionalPlanQuery query = new GetNutritionalPlanQuery(nutritionistId);
 
         // Act
-        UUID result = query.getClientId();
+        UUID result = query.getNutritionistId();
 
         // Assert
-        assertEquals(clientId, result, "The clientId should be returned correctly.");
+        assertEquals(nutritionistId, result, "The nutritionistId should be returned correctly.");
     }
 }

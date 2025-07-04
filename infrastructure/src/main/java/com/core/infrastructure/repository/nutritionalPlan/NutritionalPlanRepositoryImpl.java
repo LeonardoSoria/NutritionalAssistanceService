@@ -28,8 +28,8 @@ public class NutritionalPlanRepositoryImpl implements INutritionalPlanRepository
     }
 
     @Override
-    public List<NutritionalPlan> findByClientId(UUID clientId) {
-        List<NutritionalPlanEntity> appointmentEntities = nutritionalPlanRepository.findByClientId(clientId);
+    public List<NutritionalPlan> findByNutritionistId(UUID nutritionistId) {
+        List<NutritionalPlanEntity> appointmentEntities = nutritionalPlanRepository.findByNutritionistId(nutritionistId);
         return appointmentEntities.stream()
                 .map(NutritionalPlanPersistenceMapper::toDomainModel)
                 .collect(Collectors.toList());

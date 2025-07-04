@@ -2,6 +2,7 @@ package com.core.webapi.controller;
 
 import an.awesome.pipelinr.Pipeline;
 import com.core.application.user.create.CreateUserCommand;
+import com.core.application.user.getUser.GetUsersQuery;
 import com.core.application.user.login.LoginUserCommand;
 import com.core.application.user.login.dto.LoginDto;
 import com.core.domain.models.user.User;
@@ -14,6 +15,9 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
@@ -54,5 +58,15 @@ public class UserController {
 		LoginResponse response = new LoginResponse(loginDto.getToken(), loginDto.getTokenType(), loginDto.getExpiresIn(),
 			loginDto.getUserId(), loginDto.getUsername(), loginDto.getEmail(), loginDto.getRole());
 		return ResponseEntity.ok(response);
+	}
+
+	@GetMapping("/getUsers")
+	public ResponseEntity<List<UserResponse>> getUsers() {
+
+		GetUsersQuery getUsersQuery = new GetUsersQuery();
+		List<User> users = getUsersQuery.execute(pipeline);
+		List<UserResponse> usersResponse = UserMapper.mapToUserList(users);
+
+		return ResponseEntity.ok(usersResponse);
 	}
 }

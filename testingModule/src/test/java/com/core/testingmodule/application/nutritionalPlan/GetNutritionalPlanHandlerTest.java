@@ -40,7 +40,7 @@ class GetNutritionalPlanHandlerTest {
         NutritionalPlan plan1 = new NutritionalPlan(clientId, nutritionistId, "Plan 1");
         NutritionalPlan plan2 = new NutritionalPlan(clientId, nutritionistId, "Plan 2");
         List<NutritionalPlan> expectedPlans = List.of(plan1, plan2);
-        when(nutritionalPlanRepository.findByClientId(clientId)).thenReturn(expectedPlans);
+        when(nutritionalPlanRepository.findByNutritionistId(clientId)).thenReturn(expectedPlans);
 
         // Act
         List<NutritionalPlan> result = handler.handle(query);
@@ -50,7 +50,7 @@ class GetNutritionalPlanHandlerTest {
 
         // Verify that the repository method was called with the correct clientId
         ArgumentCaptor<UUID> captor = ArgumentCaptor.forClass(UUID.class);
-        verify(nutritionalPlanRepository).findByClientId(captor.capture());
+        verify(nutritionalPlanRepository).findByNutritionistId(captor.capture());
         assertEquals(clientId, captor.getValue(), "The repository should be called with the correct clientId.");
     }
 
@@ -61,7 +61,7 @@ class GetNutritionalPlanHandlerTest {
         GetNutritionalPlanQuery query = new GetNutritionalPlanQuery(clientId);
 
         // Mock the repository to return an empty list
-        when(nutritionalPlanRepository.findByClientId(clientId)).thenReturn(List.of());
+        when(nutritionalPlanRepository.findByNutritionistId(clientId)).thenReturn(List.of());
 
         // Act
         List<NutritionalPlan> result = handler.handle(query);
@@ -71,7 +71,7 @@ class GetNutritionalPlanHandlerTest {
 
         // Verify that the repository method was called with the correct clientId
         ArgumentCaptor<UUID> captor = ArgumentCaptor.forClass(UUID.class);
-        verify(nutritionalPlanRepository).findByClientId(captor.capture());
+        verify(nutritionalPlanRepository).findByNutritionistId(captor.capture());
         assertEquals(clientId, captor.getValue(), "The repository should be called with the correct clientId.");
     }
 }
