@@ -22,6 +22,7 @@ public class AppointmentMapper {
         return AppointmentResponse.builder()
                 .id(appointment.getId().toString())
                 .clientId(appointment.getClientId().toString())
+                .nutritionistId(appointment.getNutritionistId().toString())
                 .date(convertToLocalDate(appointment.getDate()))
                 .status(appointment.getStatus())
                 .analysisRequestResponses(
