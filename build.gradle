@@ -44,7 +44,7 @@ tasks.register('jacocoRootReport', JacocoReport) {
 
 	// Exclude both `testingModule` and `webApi` from the report
 	def modules = subprojects.findAll {
-		it.name != 'testingModule' && it.name != 'webapi'
+		it.name != 'testingModule' && it.name != 'webApi'
 	}
 
 	// Configure sources/classes (from remaining modules)

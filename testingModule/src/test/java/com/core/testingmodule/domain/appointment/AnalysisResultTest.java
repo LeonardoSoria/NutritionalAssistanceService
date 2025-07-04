@@ -20,8 +20,9 @@ class AnalysisResultTest {
     @BeforeEach
     void setUp() {
         UUID clientId = UUID.randomUUID();
+        UUID nutritionistId = UUID.randomUUID();
         receivedDate = new DateValue(LocalDate.of(2025, 2, 19));
-        Appointment appointment = new Appointment(clientId, receivedDate);
+        Appointment appointment = new Appointment(clientId, nutritionistId, receivedDate);
 
         analysisRequest = new AnalysisRequest(appointment, receivedDate);
     }

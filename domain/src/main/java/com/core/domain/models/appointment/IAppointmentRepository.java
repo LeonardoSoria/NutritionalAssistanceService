@@ -17,10 +17,10 @@ public interface IAppointmentRepository {
     /**
      * Finds an appointment by its ID.
      *
-     * @param clientId The UUID of the clientId.
+     * @param nutritionistId The UUID of the nutritionist.
      * @return An Optional containing the appointment if found, otherwise empty.
      */
-    List<Appointment> findByClientId(UUID clientId);
+    List<Appointment> findByNutritionistId(UUID nutritionistId);
 
     /**
      * Updates an existing appointment.

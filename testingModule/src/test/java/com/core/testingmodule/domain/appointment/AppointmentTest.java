@@ -15,14 +15,16 @@ import static org.mockito.Mockito.*;
 public class AppointmentTest {
 
     private UUID clientId;
+    private UUID nutritionistId;
     private DateValue date;
     private Appointment appointment;
 
     @BeforeEach
     void setUp() {
         clientId = UUID.randomUUID();
+		nutritionistId = UUID.randomUUID();
         date = mock(DateValue.class);
-        appointment = new Appointment(clientId, date);
+        appointment = new Appointment(clientId, nutritionistId, date);
 		appointment.scheduled();
     }
 
@@ -30,6 +32,7 @@ public class AppointmentTest {
     void testAppointmentInitialization() {
         assertNotNull(appointment.getId());
         assertEquals(clientId, appointment.getClientId());
+        assertEquals(nutritionistId, appointment.getNutritionistId());
         assertEquals(date, appointment.getDate());
         assertEquals("Scheduled", appointment.getStatus());
         assertTrue(appointment.getAnalysisRequests().isEmpty());

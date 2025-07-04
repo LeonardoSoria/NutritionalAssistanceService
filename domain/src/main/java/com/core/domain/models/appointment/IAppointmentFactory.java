@@ -5,5 +5,5 @@ import com.core.domain.shared.DateValue;
 import java.util.UUID;
 
 public interface IAppointmentFactory {
-    Appointment create(UUID clientId, DateValue date);
+    Appointment create(UUID clientId, UUID nutritionistId, DateValue date);
 }

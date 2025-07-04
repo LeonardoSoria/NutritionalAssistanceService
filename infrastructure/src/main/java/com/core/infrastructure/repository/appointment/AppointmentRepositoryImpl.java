@@ -28,8 +28,8 @@ public class AppointmentRepositoryImpl implements IAppointmentRepository {
     }
 
     @Override
-    public List<Appointment> findByClientId(UUID clientId) {
-        List<AppointmentEntity> appointmentEntities = appointmentRepository.findByClientId(clientId);
+    public List<Appointment> findByNutritionistId(UUID nutritionistId) {
+        List<AppointmentEntity> appointmentEntities = appointmentRepository.findByNutritionistId(nutritionistId);
         return appointmentEntities.stream()
                 .map(AppointmentPersistenceMapper::toDomainModel)
                 .collect(Collectors.toList());

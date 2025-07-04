@@ -15,13 +15,15 @@ class CreateAppointmentCommandTest {
     void testCreateAppointmentCommandConstructor() {
         // Arrange
         UUID clientId = UUID.randomUUID();
+        UUID nutritionistId = UUID.randomUUID();
         DateValue appointmentDate = new DateValue(LocalDate.now());
 
         // Act
-        CreateAppointmentCommand command = new CreateAppointmentCommand(clientId, appointmentDate);
+        CreateAppointmentCommand command = new CreateAppointmentCommand(clientId, nutritionistId, appointmentDate);
 
         // Assert
         assertEquals(clientId, command.getClientId());
+        assertEquals(nutritionistId, command.getNutritionistId());
         assertEquals(appointmentDate, command.getAppointmentDate());
     }
 }
